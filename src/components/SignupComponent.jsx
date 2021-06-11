@@ -23,34 +23,38 @@ class SignupComponent extends Component {
   render() {
     return (
       <>
-        <div id="signup_header">
-          <button
-            id="user"
-            className="signupButton"
-            onClick={this.handleUserSignup}
-            style={{
-              color: this.state.userActive ? "green" : "black",
-              borderBottom: this.state.userActive ? "green solid 1px" : "none",
-            }}
-          >
-            User Signup
-          </button>
-          <button
-            id="expert"
-            className="signupButton"
-            onClick={this.handleExpertSignup}
-            style={{
-              color: this.state.expertActive ? "green" : "black",
-              borderBottom: this.state.expertActive
-                ? "green solid 1px"
-                : "none",
-            }}
-          >
-            Expert Signup
-          </button>
+        <div className="container mt-3">
+          <div id="signup_header" className="mb-2">
+            <span
+              style={{
+                position: "absolute",
+                padding: "8px 54px 8px 58px",
+                marginLeft: "15px",
+                cursor: "pointer",
+                color: this.state.userActive ? "white" : "black",
+              }}
+              onClick={this.handleUserSignup}
+            >
+              User Signup
+            </span>
+            <span
+              style={{
+                position: "absolute",
+                padding: "8px 54px 8px 58px",
+                marginLeft: "212px",
+                cursor: "pointer",
+                color: this.state.expertActive ? "white" : "black",
+              }}
+              onClick={this.handleExpertSignup}
+            >
+              Expert Signup
+            </span>
+          </div>
+          {this.state.userActive && <UserSignupComponent prop={this.props} />}
+          {this.state.expertActive && (
+            <ExpertSignupComponent prop={this.props} />
+          )}
         </div>
-        {this.state.userActive && <UserSignupComponent prop={this.props} />}
-        {this.state.expertActive && <ExpertSignupComponent prop={this.props} />}
       </>
     );
   }

@@ -1,3 +1,12 @@
-export const BASE_URL = "https://vcare4u.herokuapp.com";
+// export const BASE_URL = "https://vcare4u.herokuapp.com";
 // const BASE_URL = "https://vcare4u.azurewebsites.net";
-// export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "http://localhost:8080";
+export const LOCAL_URL = "http://localhost:3000";
+export const SECRET_KEY = "Choumiyan";
+function importAll(r) {
+  return r.keys().map(r);
+}
+
+export const images = importAll(
+  require.context("./../images/Carousel/", false, /\.(png|jpe?g|svg)$/)
+);

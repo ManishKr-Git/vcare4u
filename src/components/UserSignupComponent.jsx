@@ -3,6 +3,8 @@ import { Input, Label, Button, Form, FormGroup, Col, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import emailjs from "emailjs-com";
 import Services from "./../services/Services.js";
+import { LOCAL_URL } from "./../services/constant.js";
+import LoadingComponent from "./LoadingComponent.jsx";
 class UserSignupComponent extends Component {
   constructor(props) {
     super(props);
@@ -14,23 +16,16 @@ class UserSignupComponent extends Component {
       password: "",
       cpassword: "",
       errorMessage: "",
+      showLoading: false,
     };
 
     this.handleUserSubmit = this.handleUserSubmit.bind(this);
-    this.generateActivationCode = this.generateActivationCode.bind(this);
-  }
-  generateActivationCode() {
-    let code = "";
-    for (let k = 1; k <= 32; k++) {
-      if (Math.random() * 10 > 3)
-        code += String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-      else code += String.fromCharCode(Math.floor(Math.random() * 10) + 48);
-    }
-    return code;
   }
 
   handleUserSubmit(values) {
     values.preventDefault();
+    console.log(values.target);
+
     let errorMessage = "";
     if (this.state.name === "") {
       errorMessage += "Invalid Full Name\n";
@@ -59,15 +54,17 @@ class UserSignupComponent extends Component {
         email: this.state.email,
         phone: this.state.phone,
         aadhar: this.state.aadhar,
-        password: this.state.password,
+        password: Services.passwordEncryption(this.state.password),
         rating: 0,
         isActivated: false,
-        activationCode: this.generateActivationCode(),
+        activationCode: Services.generateActivationCode(),
       };
+      this.setState({ showLoading: true });
       Services.addUser(user).then(
         (response) => {
           values.target.message.value =
-            "https://vcare4-u.herokuapp.com/emailVerification/activatingAccount/" +
+            LOCAL_URL +
+            "/user-email-verification/activating-account/" +
             user.activationCode;
           emailjs
             .sendForm(
@@ -87,6 +84,7 @@ class UserSignupComponent extends Component {
           this.props.prop.history.push(`/accounts/activate-email`);
         },
         (error) => {
+          this.setState({ showLoading: false });
           console.log(error);
         }
       );
@@ -94,130 +92,135 @@ class UserSignupComponent extends Component {
   }
   render() {
     return (
-      <div id="userSignupComponent">
-        {this.state.errorMessage && (
-          <div
-            className="alert alert-danger"
-            style={{ whiteSpace: "pre-wrap" }}
-          >
-            {this.state.errorMessage}
+      <>
+        {this.state.showLoading && <LoadingComponent></LoadingComponent>}
+        {!this.state.showLoading && (
+          <div id="userSignupComponent">
+            {this.state.errorMessage && (
+              <div
+                className="alert alert-danger"
+                style={{ whiteSpace: "pre-wrap" }}
+              >
+                {this.state.errorMessage}
+              </div>
+            )}
+            <Form onSubmit={this.handleUserSubmit}>
+              <FormGroup row>
+                <Label for="name" sm={3}>
+                  Full Name
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Enter Full Name Here"
+                    onChange={(e) => {
+                      this.setState({ name: e.target.value });
+                    }}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="email" sm={3}>
+                  Email
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter Email Here"
+                    onChange={(e) => {
+                      this.setState({ email: e.target.value });
+                    }}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="phone" sm={3}>
+                  Mobile Number
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    placeholder="Enter Phone Number Here"
+                    pattern="[0-9]{10}"
+                    onChange={(e) => {
+                      this.setState({ phone: e.target.value });
+                    }}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="phone" sm={3}>
+                  Aadhar Number
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="text"
+                    name="aadhar"
+                    id="aadhar"
+                    placeholder="Enter Aadhar Number Here"
+                    onChange={(e) => {
+                      this.setState({ aadhar: e.target.value });
+                    }}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="password" sm={3}>
+                  Password
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Don't tell to anyone"
+                    onChange={(e) => {
+                      this.setState({ password: e.target.value });
+                    }}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="cpassword" sm={3}>
+                  Confirm Password
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="password"
+                    name="cpassword"
+                    id="cpassword"
+                    placeholder="Don't tell to anyone"
+                    onChange={(e) => {
+                      this.setState({ cpassword: e.target.value });
+                    }}
+                  />
+                </Col>
+              </FormGroup>
+              <Row>
+                <input type="hidden" name="message" />
+              </Row>
+              <Row>
+                <Col>
+                  <Button type="submit" color="success" sm={3}>
+                    Signup
+                  </Button>
+                </Col>
+                <Col sm={9}>
+                  <p>
+                    Already a member? <Link to="/login"> Login Here</Link>
+                  </p>
+                </Col>
+              </Row>
+            </Form>
           </div>
         )}
-        <Form onSubmit={this.handleUserSubmit}>
-          <FormGroup row>
-            <Label for="name" sm={3}>
-              Full Name
-            </Label>
-            <Col sm={9}>
-              <Input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Enter Full Name Here"
-                onChange={(e) => {
-                  this.setState({ name: e.target.value });
-                }}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label for="email" sm={3}>
-              Email
-            </Label>
-            <Col sm={9}>
-              <Input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Enter Email Here"
-                onChange={(e) => {
-                  this.setState({ email: e.target.value });
-                }}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label for="phone" sm={3}>
-              Mobile Number
-            </Label>
-            <Col sm={9}>
-              <Input
-                type="text"
-                name="phone"
-                id="phone"
-                placeholder="Enter Phone Number Here"
-                pattern="[0-9]{10}"
-                onChange={(e) => {
-                  this.setState({ phone: e.target.value });
-                }}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label for="phone" sm={3}>
-              Aadhar Number
-            </Label>
-            <Col sm={9}>
-              <Input
-                type="text"
-                name="aadhar"
-                id="aadhar"
-                placeholder="Enter Aadhar Number Here"
-                onChange={(e) => {
-                  this.setState({ aadhar: e.target.value });
-                }}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label for="password" sm={3}>
-              Password
-            </Label>
-            <Col sm={9}>
-              <Input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Don't tell to anyone"
-                onChange={(e) => {
-                  this.setState({ password: e.target.value });
-                }}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label for="cpassword" sm={3}>
-              Confirm Password
-            </Label>
-            <Col sm={9}>
-              <Input
-                type="password"
-                name="cpassword"
-                id="cpassword"
-                placeholder="Don't tell to anyone"
-                onChange={(e) => {
-                  this.setState({ cpassword: e.target.value });
-                }}
-              />
-            </Col>
-          </FormGroup>
-          <Row>
-            <input type="hidden" name="message" />
-          </Row>
-          <Row>
-            <Col>
-              <Button type="submit" color="success" sm={3}>
-                Signup
-              </Button>
-            </Col>
-            <Col sm={9}>
-              <p>
-                Already a member? <Link to="/login"> Login Here</Link>
-              </p>
-            </Col>
-          </Row>
-        </Form>
-      </div>
+      </>
     );
   }
 }

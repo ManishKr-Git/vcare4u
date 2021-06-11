@@ -1,94 +1,93 @@
+.App {
+  padding: 0;
+  margin: 0 auto;
+  background-color: rgb(81, 91, 102);
+}
 #loginForm {
+  margin: 0 auto;
   width: 450px;
-  margin-top: 50px;
-  margin-left: 300px;
   padding: 35px;
   border-radius: 5%;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+  box-shadow: rgba(500, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 128, 0.8) 0px 8px 16px -8px;
+  background-image: linear-gradient(
+    135deg,
+    rgba(150, 205, 300, 1),
+    rgba(150, 200, 80, 1)
+  );
 }
-
 #signup_header {
   width: 450px;
   height: 45px;
-  margin-left: 300px;
+  margin: 0 auto;
   border-bottom: #339cf3 solid 1px;
-  /* border: groove; */
   border-radius: 30px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 128, 0.8) 0px 8px 16px -8px;
+  background-image: linear-gradient(
+    135deg,
+    rgba(150, 205, 300, 1),
+    rgba(150, 200, 80, 1)
+  );
 }
 #userSignupComponent {
-  margin-top: 10px;
   width: 450px;
-  /* height: 600px; */
-  margin-left: 300px;
+  margin: 0 auto;
   box-shadow: 0px 13px 27px -5px grey;
   padding: 20px;
   border-radius: 5%;
+  background-image: linear-gradient(
+    135deg,
+    rgba(150, 205, 300, 1),
+    rgba(150, 200, 80, 1)
+  );
 }
 #expertSignupComponent {
-  margin-top: 10px;
+  margin: 0 auto;
+  height: 500px;
   width: 450px;
-  /* height: 700px; */
-  margin-left: 300px;
   box-shadow: 0px 13px 27px -5px grey;
   padding: 20px;
   border-radius: 5%;
-}
-#user {
-  border-top-left-radius: 20%;
-  font-size: 110%;
-  float: left;
-  padding: 8px 53px 8px 50px;
-  margin-left: 20px;
-  border: none;
-  background-color: white;
-  border-right: #9498a0 solid 2px;
-}
-#expert {
-  border-top-right-radius: 20%;
-  font-size: 110%;
-  float: right;
-  padding: 8px 50px 8px 53px;
-  margin-right: 20px;
-  border: none;
-  background-color: white;
+  overflow: hidden;
+  overflow-y: auto;
+  background-image: linear-gradient(
+    135deg,
+    rgba(150, 205, 300, 1),
+    rgba(150, 200, 80, 1)
+  );
 }
 .footer {
-  position: absolute;
-  width: 100%;
-  height: 40px;
   margin-top: 100px;
-  margin-bottom: 10px;
-  background-color: #ecc5cd;
+  margin: 0 auto;
+  margin-top: 60px;
+  height: 40px;
+  background-color: black;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Scrollbar CSS */
+#expertSignupComponent::-webkit-scrollbar {
+  width: 5px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#description::-webkit-scrollbar {
+  width: 2px;
 }
-
-.App-link {
-  color: #61dafb;
+.booking {
+  width: 400px;
+  background-color: azure;
+  margin: 0 auto;
+  margin-top: 30px;
+  padding: 10px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.loading {
+  position: relative;
+  margin-top: 25%;
+  margin-left: 40%;
+  height: 200px;
+  width: 100%;
+}
+.aboutPage {
+  height: 90vh;
+  background-color: rgb(247, 240, 231);
+  margin: 0 auto;
+  margin-top: 20px;
 }

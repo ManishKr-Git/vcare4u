@@ -12,7 +12,10 @@ import email from "./../images/email.png";
 class ActivateUser extends Component {
   render() {
     return (
-      <div className="container" style={{ textAlign: "center" }}>
+      <div
+        className="container"
+        style={{ textAlign: "center", marginTop: "50px  " }}
+      >
         <Card style={{ width: "400px", margin: "0 auto" }}>
           <CardImg top width="200px" height="200px" src={email} alt="Image" />
           <CardBody>
