@@ -1,4 +1,4 @@
-export const BASE_URL = "https://vcare4u-springboot.herokuapp.com/";
+export const BASE_URL = "https://vcare4u-springboot.herokuapp.com";
 export const LOCAL_URL = "http://localhost:3000";
 export const SECRET_KEY = "Choumiyan";
 function importAll(r) {
