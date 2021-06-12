@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Form, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 import logo from ".././images/logo.png";
-import logo2 from ".././images/logo2.png";
 import Services from "../services/Services.js";
 class HeaderComponent extends Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class HeaderComponent extends Component {
     return (
       <Navbar expand="md" bg="dark" variant="dark" className="p-1">
         <Navbar.Brand>
-          <Link to="/home">
+          <Link to={Services.isExpertLoggedIn ? "#" : "/home"}>
             <img
               src={logo}
               alt="logo"

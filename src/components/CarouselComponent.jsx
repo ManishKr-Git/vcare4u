@@ -1,7 +1,6 @@
 import Carousel from "react-bootstrap/Carousel";
 import React, { Component } from "react";
 import { images } from "./../services/constant";
-import { Button } from "reactstrap";
 class CarouselComponent extends Component {
   constructor(props) {
     super(props);

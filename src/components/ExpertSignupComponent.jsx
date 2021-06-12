@@ -45,43 +45,43 @@ class ExpertSignupComponent extends Component {
   handleExpertSubmit(e) {
     e.preventDefault();
     let errorMessage = "";
-    // if (this.state.name === "") {
-    //   errorMessage += "Invalid Name\n";
-    // }
-    // if (this.state.email === "") {
-    //   errorMessage += "Invalid Email\n";
-    // }
-    // if (this.state.phone === "") {
-    //   errorMessage += "Invalid Phone Number\n";
-    // }
-    // if (this.state.aadhar.length < 12) {
-    //   errorMessage += "Invalid Aadhar Number\n";
-    // }
-    // if (this.state.password === "" && this.state.cpassword === "") {
-    //   errorMessage += "Invalid Password\n";
-    // }
-    // if (this.state.password !== this.state.cpassword) {
-    //   errorMessage += "Password should match\n";
-    // }
-    // if (this.state.selctedExpertization === "") {
-    //   errorMessage += "Choose a Expertization Field\n";
-    // }
-    // if (this.state.selctedSpecialization === "") {
-    //   errorMessage += "Choose a Specialization Field\n";
-    // }
-    // if (this.state.fees === "") {
-    //   errorMessage += "Enter price per appointment\n";
-    // }
-    // if (this.state.description === "") {
-    //   errorMessage += "Provide a description about you\n";
-    // }
-    // if (this.state.image === "") {
-    //   errorMessage += "An image of you can increase customer's trust\n";
-    // }
-    // if (errorMessage !== "") {
-    //   this.setState({ errorMessage: errorMessage });
-    //   return;
-    // }
+    if (this.state.name === "") {
+      errorMessage += "Invalid Name\n";
+    }
+    if (this.state.email === "") {
+      errorMessage += "Invalid Email\n";
+    }
+    if (this.state.phone === "") {
+      errorMessage += "Invalid Phone Number\n";
+    }
+    if (this.state.aadhar.length < 12) {
+      errorMessage += "Invalid Aadhar Number\n";
+    }
+    if (this.state.password === "" && this.state.cpassword === "") {
+      errorMessage += "Invalid Password\n";
+    }
+    if (this.state.password !== this.state.cpassword) {
+      errorMessage += "Password should match\n";
+    }
+    if (this.state.selctedExpertization === "") {
+      errorMessage += "Choose a Expertization Field\n";
+    }
+    if (this.state.selctedSpecialization === "") {
+      errorMessage += "Choose a Specialization Field\n";
+    }
+    if (this.state.fees === "") {
+      errorMessage += "Enter price per appointment\n";
+    }
+    if (this.state.description === "") {
+      errorMessage += "Provide a description about you\n";
+    }
+    if (this.state.image === "") {
+      errorMessage += "An image of you can increase customer's trust\n";
+    }
+    if (errorMessage !== "") {
+      this.setState({ errorMessage: errorMessage });
+      return;
+    }
     const data = {
       name: this.state.name,
       email: this.state.email,

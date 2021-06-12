@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  CardImg,
-  CardSubtitle,
-  Col,
-  Row,
-  Button,
-  Card,
-  Input,
-} from "reactstrap";
+import { CardImg, CardSubtitle, Col, Row, Button, Input } from "reactstrap";
 import Services from "./../services/Services.js";
 import ReactStars from "react-rating-stars-component";
 import LoadingComponent from "./LoadingComponent.jsx";
