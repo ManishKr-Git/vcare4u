@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-//import { Test } from './AboutComponentJsx.styles';
 
 class ContactUsComponent extends Component {
   constructor(props) {
