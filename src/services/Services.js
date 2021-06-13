@@ -45,7 +45,6 @@ class Services {
   }
   isExpertLoggedIn() {
     let expert = sessionStorage.getItem("expert");
-    console.log(expert);
     if (expert === null) {
       return false;
     }
@@ -81,6 +80,9 @@ class Services {
   passwordDecryption(password) {
     var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
     return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  }
+  getExpertReviews(id) {
+    return axios.get(`${BASE_URL}/expert-ratings/${id}`);
   }
 }
 export default new Services();

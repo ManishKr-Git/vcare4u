@@ -45,7 +45,6 @@ class HomeComponent extends Component {
           {this.state.experts.map((expert) => (
             <Card
               className="p-0"
-              class="card"
               text="white"
               style={{
                 backgroundColor: "#073743",

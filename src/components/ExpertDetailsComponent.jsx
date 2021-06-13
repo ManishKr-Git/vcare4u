@@ -4,6 +4,7 @@ import Services from "./../services/Services.js";
 import ReactStars from "react-rating-stars-component";
 import LoadingComponent from "./LoadingComponent.jsx";
 import { Link } from "react-router-dom";
+import { Error } from "@material-ui/icons";
 export default class ExpertDetailsComponent extends Component {
   constructor(props) {
     super(props);
@@ -12,16 +13,24 @@ export default class ExpertDetailsComponent extends Component {
       rating: 0,
       review: "",
       showLoading: true,
+      all_reviews: null,
     };
     this.handleAddRating = this.handleAddRating.bind(this);
   }
   componentDidMount() {
     const id = this.props.match.params.expertId;
-    console.log("Manish");
     Services.getExpert(id).then(
       (response) => {
+        Services.getExpertReviews(id).then(
+          (response) => {
+            console.log(response);
+            this.setState({ all_reviews: response.data });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
         this.setState({ selectedExpert: response.data });
-        console.log(this.state.selectedExpert);
         this.setState({ showLoading: false });
       },
       (error) => {
@@ -103,6 +112,11 @@ export default class ExpertDetailsComponent extends Component {
                   <small style={{ marginTop: "10px" }}>
                     {this.state.selectedExpert.rating}
                   </small>
+                  {this.state.all_reviews && (
+                    <small style={{ marginTop: "10px", marginLeft: "20px" }}>
+                      {this.state.all_reviews.length}
+                    </small>
+                  )}
                 </div>
                 <hr></hr>
                 <CardSubtitle
@@ -181,6 +195,36 @@ export default class ExpertDetailsComponent extends Component {
               >
                 Add My Review
               </Button>
+            </div>
+            <hr style={{ borderTop: "1px solid #ffc107" }}></hr>
+            <div
+              className="container ml-0 p-1"
+              style={{
+                width: "870px",
+                backgroundColor: "#868785",
+                boxShadow:
+                  "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
+              }}
+            >
+              {this.state.all_reviews &&
+                this.state.all_reviews.map((review) => (
+                  <>
+                    <div style={{ display: "flex" }}>
+                      <h6 style={{ color: "#E6F369", marginTop: "5px" }}>
+                        <span>{review.raterName}</span>
+                      </h6>
+                      <ReactStars
+                        count={5}
+                        size={20}
+                        value={review.stars}
+                        isHalf={true}
+                        activeColor="#ffd700"
+                        edit={false}
+                      />
+                    </div>
+                    <h6 style={{ color: "#E6ECEA" }}>{review.review}</h6>
+                  </>
+                ))}
             </div>
           </div>
         )}

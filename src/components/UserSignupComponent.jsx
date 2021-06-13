@@ -24,8 +24,6 @@ class UserSignupComponent extends Component {
 
   handleUserSubmit(values) {
     values.preventDefault();
-    console.log(values.target);
-
     let errorMessage = "";
     if (this.state.name === "") {
       errorMessage += "Invalid Full Name\n";
@@ -54,7 +52,7 @@ class UserSignupComponent extends Component {
         email: this.state.email,
         phone: this.state.phone,
         aadhar: this.state.aadhar,
-        password: Services.passwordEncryption(this.state.password),
+        password: this.state.password,
         rating: 0,
         isActivated: false,
         activationCode: Services.generateActivationCode(),
@@ -62,6 +60,7 @@ class UserSignupComponent extends Component {
       this.setState({ showLoading: true });
       Services.addUser(user).then(
         (response) => {
+          console.log(response);
           values.target.message.value =
             LOCAL_URL +
             "/user-email-verification/activating-account/" +
@@ -84,6 +83,7 @@ class UserSignupComponent extends Component {
           this.props.prop.history.push(`/accounts/activate-email`);
         },
         (error) => {
+          console.log(error);
           this.setState({ showLoading: false });
           console.log(error);
         }

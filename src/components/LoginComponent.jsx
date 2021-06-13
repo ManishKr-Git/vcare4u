@@ -77,10 +77,12 @@ class LoginComponent extends Component {
       if (isExpertLogin) {
         Services.expertLogin(data).then(
           (response) => {
+            console.log(response);
             sessionStorage.setItem("expert", JSON.stringify(response.data));
             window.location.href = `/bookings/`;
           },
           (error) => {
+            console.log(error);
             if (error.message.includes("404")) {
               this.setState({ errorMessage: "Invalid Credentials" });
             } else this.setState({ errorMessage: "Expert is not activated" });
