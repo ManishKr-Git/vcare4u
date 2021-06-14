@@ -20,6 +20,15 @@ export default class ExpertDetailsComponent extends Component {
     const id = this.props.match.params.expertId;
     Services.getExpert(id).then(
       (response) => {
+        Services.getExpertReviews(id).then(
+          (response) => {
+            console.log(response);
+            this.setState({ all_reviews: response.data });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
         this.setState({ selectedExpert: response.data });
         this.setState({ showLoading: false });
       },
