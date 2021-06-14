@@ -86,8 +86,40 @@
   width: 100%;
 }
 .aboutPage {
-  height: 90vh;
-  background-color: rgb(247, 240, 231);
+  background-color: #989997;
   margin: 0 auto;
   margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  padding: 10px;
+}
+.bg-image-inspire {
+  background: url(images/aboutUsPage.png) 90% 5% no-repeat;
+  display: flex;
+  width: 100%;
+  background-size: cover;
+  padding: 120px 50px;
+}
+.center-block {
+  display: block !important;
+}
+.approach {
+  background-color: aliceblue;
+  padding: 15px;
+}
+.contactUs {
+  background-color: #989997;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  padding: 10px;
+}
+.heading {
+  background-color: #c6ecfa;
+  padding: 10px;
+}
+.contactUs-banner {
+  background-color: #c6ecfa;
+  padding: 15px;
 }
