@@ -4,7 +4,6 @@ import Services from "./../services/Services.js";
 import ReactStars from "react-rating-stars-component";
 import LoadingComponent from "./LoadingComponent.jsx";
 import { Link } from "react-router-dom";
-import { Error } from "@material-ui/icons";
 export default class ExpertDetailsComponent extends Component {
   constructor(props) {
     super(props);
