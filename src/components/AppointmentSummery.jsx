@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Row } from "reactstrap";
+import { Col, Row, Button } from "reactstrap";
 import Services from "../services/Services";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
@@ -9,6 +9,12 @@ class AppointmentSummery extends Component {
     this.state = {
       selectedExpert: null,
     };
+    this.handleBooking = this.handleBooking.bind(this);
+  }
+  handleBooking() {
+    this.props.history.push(
+      "/order-placed/expert-id/" + this.state.selectedExpert.id
+    );
   }
   componentDidMount() {
     const id = this.props.match.params.expertId;
@@ -88,7 +94,10 @@ class AppointmentSummery extends Component {
               </Row>
               <Row className="p-2">
                 <Col sm={10}>Discount</Col>
-                <Col sm={2}>{this.state.selectedExpert.fees}</Col>
+                <Col sm={2}>
+                  {this.state.selectedExpert.priceWithoutDiscount -
+                    this.state.selectedExpert.fees}
+                </Col>
               </Row>
               <Row className="p-2">
                 <Col sm={10}>
@@ -99,15 +108,9 @@ class AppointmentSummery extends Component {
                 </Col>
               </Row>
               <Row className="p-4">
-                <Link
-                  to={
-                    "/order-summary/ksuz2mc1d5xaf8h7lcdp4pzd5hyj05fkpl6r6031elpgn6tgpvsgs8w3b34cb26n/consultant-id/" +
-                    this.state.selectedExpert.id
-                  }
-                  className="btn btn-primary "
-                >
+                <Button color="primary" onClick={this.handleBooking}>
                   Proceed to Pay
-                </Link>
+                </Button>
               </Row>
             </>
           )}

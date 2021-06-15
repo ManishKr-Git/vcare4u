@@ -16,6 +16,7 @@ import ProfileComponent from "./ProfileComponent";
 import BookingsComponent from "./BookingsComponent";
 import UserAuthenticatedRoute from "../services/UserAuthenticatedRoute";
 import AppointmentSummery from "./AppointmentSummery.jsx";
+import OrderPlaced from "./OrderPlaced.jsx";
 class RouteComponent extends Component {
   render() {
     return (
@@ -45,6 +46,12 @@ class RouteComponent extends Component {
               path="/order-summary/ksuz2mc1d5xaf8h7lcdp4pzd5hyj05fkpl6r6031elpgn6tgpvsgs8w3b34cb26n/consultant-id/:expertId"
               exact
               component={AppointmentSummery}
+            />
+            <UserAuthenticatedRoute
+              Route
+              path="/order-placed/expert-id/:expertId"
+              exact
+              component={OrderPlaced}
             />
             <UserAuthenticatedRoute
               Route

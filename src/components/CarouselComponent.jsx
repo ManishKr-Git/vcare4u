@@ -9,10 +9,7 @@ class CarouselComponent extends Component {
     return (
       <Carousel controls={false} fade={true} interval={1500}>
         {images.map((image) => (
-          <Carousel.Item
-            onMouseOver={this.showButton}
-            onMouseLeave={this.hideButton}
-          >
+          <Carousel.Item key={Math.random(100)}>
             <img
               className="d-block w-100"
               src={image.default}

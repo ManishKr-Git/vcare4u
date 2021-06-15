@@ -83,9 +83,7 @@ class LoginComponent extends Component {
           },
           (error) => {
             console.log(error);
-            if (error.message.includes("404")) {
-              this.setState({ errorMessage: "Invalid Credentials" });
-            } else this.setState({ errorMessage: "Expert is not activated" });
+            this.setState({ errorMessage: error.response.data.message });
             this.setState({ showLoading: false });
           }
         );
@@ -96,17 +94,13 @@ class LoginComponent extends Component {
             window.location.href = `/home/${response.data.name}`;
           },
           (error) => {
-            if (error.message.includes("404")) {
-              this.setState({ errorMessage: "Invalid Credentials" });
-              console.log("Vinit Chutoa ha");
-            } else this.setState({ errorMessage: "User is not activated" });
+            this.setState({ errorMessage: error.response.data.message });
             this.setState({ showLoading: false });
           }
         );
       }
     } else {
       this.setState({ errorMessage: err });
-      return;
     }
   }
   render() {

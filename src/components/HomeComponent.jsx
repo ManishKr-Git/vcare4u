@@ -21,6 +21,7 @@ class HomeComponent extends Component {
       (response) => {
         this.setState({ showLoading: false });
         this.setState({ experts: response.data });
+        console.log(response.data);
       },
       (error) => {
         this.setState({ showLoading: false });
@@ -94,7 +95,7 @@ class HomeComponent extends Component {
                 }}
               >
                 <CardTitle tag="h5" style={{ color: "#FFF" }}>
-                  {expert.name}
+                  {expert.name.split(" ")[0]}
                 </CardTitle>
                 <CardSubtitle style={{ fontSize: "90%", color: "#FFF" }}>
                   {expert.expertization} <span>({expert.specification})</span>
@@ -112,7 +113,9 @@ class HomeComponent extends Component {
                 <br />
                 <span style={{ float: "right", color: "#F0EFEB" }}>
                   You Save:
-                  <span className="text-danger">₹{expert.fees}</span>
+                  <span className="text-danger">
+                    ₹{expert.priceWithoutDiscount - expert.fees}
+                  </span>
                 </span>
                 <br />
                 <Link

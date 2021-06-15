@@ -71,13 +71,6 @@
 #description::-webkit-scrollbar {
   width: 2px;
 }
-.booking {
-  width: 400px;
-  background-color: azure;
-  margin: 0 auto;
-  margin-top: 30px;
-  padding: 10px;
-}
 .loading {
   position: relative;
   margin-top: 25%;
@@ -122,4 +115,37 @@
 .contactUs-banner {
   background-color: #c6ecfa;
   padding: 15px;
+}
+.booking {
+  width: 400px;
+  background-color: #e8ebe5;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  padding: 10px;
+}
+.order_placed {
+  background-color: #e8ebe5;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  padding: 10px;
+}
+.thankyou {
+  background-color: #fdfdfd;
+  margin: 0 auto;
+  padding: 10px;
+  height: 100%;
+  text-align: center;
+}
+.inner_placed {
+  width: 400px;
+  background-color: #fdfdfd;
+  margin: 0 auto;
+  margin-top: 60px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  padding: 30px;
 }

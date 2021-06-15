@@ -131,7 +131,8 @@ class ExpertSignupComponent extends Component {
       },
       (error) => {
         this.setState({ showLoading: false });
-        console.log(error);
+        console.log(error.response);
+        this.setState({ errorMessage: error.response.data.message });
       }
     );
   }
