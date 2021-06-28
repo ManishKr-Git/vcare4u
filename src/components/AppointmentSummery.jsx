@@ -1,8 +1,7 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import { Col, Row, Button } from "reactstrap";
 import Services from "../services/Services";
 import ReactStars from "react-rating-stars-component";
-import { LaptopWindows } from "@material-ui/icons";
 class AppointmentSummery extends Component {
   constructor(props) {
     super(props);

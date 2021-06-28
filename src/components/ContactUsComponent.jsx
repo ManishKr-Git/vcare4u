@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import contact from "./../images/contact-us-vector.png";
-import { Input, Label, Button, Form, FormGroup, Col, Row } from "reactstrap";
-import { fontSize } from "@material-ui/system";
+import { Input, Button, FormGroup, Col, Row } from "reactstrap";
 
 class ContactUsComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="container">

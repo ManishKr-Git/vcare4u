@@ -2,9 +2,6 @@ import Carousel from "react-bootstrap/Carousel";
 import React, { Component } from "react";
 import { images } from "./../services/constant";
 class CarouselComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <Carousel controls={false} fade={true} interval={1500}>

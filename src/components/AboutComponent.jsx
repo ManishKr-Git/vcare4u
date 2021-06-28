@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardBody, CardImg, CardSubtitle, CardTitle } from "reactstrap";
+import { Card, CardBody, CardImg, CardTitle } from "reactstrap";
 import { Col, Row } from "reactstrap";
 import f1 from "./../images/feedback1.png";
 import f2 from "./../images/feedback2.webp";
@@ -8,10 +8,6 @@ import connect from "./../images/connect.svg";
 import trust from "./../images/trust.svg";
 import transparency from "./../images/transparency.svg";
 class AboutComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="container">
