@@ -2,17 +2,14 @@ import axios from "axios";
 import { BASE_URL, SECRET_KEY } from "./constant";
 var CryptoJS = require("crypto-js");
 class Services {
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //Users Functions
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
   activateUserAccount(activationCode) {
     return axios.get(
       `${BASE_URL}/user-email-verification/activating-account/${activationCode}`
     );
   }
-  activateExpertAccount(activationCode) {
-    return axios.get(
-      `${BASE_URL}/expert-email-verification/activating-account/${activationCode}`
-    );
-  }
-  //Users Functions
   addUser(user) {
     return axios.post(`${BASE_URL}/users`, user);
   }
@@ -30,7 +27,17 @@ class Services {
     }
     return true;
   }
+  getUserBookings(id) {
+    return axios.get(`${BASE_URL}/user-bookings/${id}`);
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
   //Expert Functions
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  activateExpertAccount(activationCode) {
+    return axios.get(
+      `${BASE_URL}/expert-email-verification/activating-account/${activationCode}`
+    );
+  }
   addExpert(expert) {
     return axios.post(`${BASE_URL}/experts`, expert);
   }
@@ -53,8 +60,13 @@ class Services {
   updateExpertRating(expertId, ratingData) {
     return axios.post(`${BASE_URL}/expert-ratings/${expertId}`, ratingData);
   }
+  getExpertBookings(id) {
+    return axios.get(`${BASE_URL}/expert-bookings/${id}`);
+  }
 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
   //Common Functions
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   generateActivationCode() {
     let code = "";
@@ -70,19 +82,25 @@ class Services {
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("expert");
   }
-  passwordEncryption(password) {
-    var ciphertext = CryptoJS.AES.encrypt(
-      JSON.stringify(password),
-      SECRET_KEY
-    ).toString();
-    return ciphertext;
-  }
+  // passwordEncryption(password) {
+  //   var ciphertext = CryptoJS.AES.encrypt(
+  //     JSON.stringify(password),
+  //     SECRET_KEY
+  //   ).toString();
+  //   return ciphertext;
+  // }
   passwordDecryption(password) {
     var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
     return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   }
   getExpertReviews(id) {
     return axios.get(`${BASE_URL}/expert-ratings/${id}`);
+  }
+  addBookingDetails(booking) {
+    return axios.post(`${BASE_URL}/add-bookings/`, booking);
+  }
+  createOrder(orderData) {
+    return axios.post(`${BASE_URL}/createOrder/`, orderData);
   }
 }
 export default new Services();

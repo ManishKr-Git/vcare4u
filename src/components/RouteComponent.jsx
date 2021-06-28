@@ -49,7 +49,7 @@ class RouteComponent extends Component {
             />
             <UserAuthenticatedRoute
               Route
-              path="/order-placed/expert-id/:expertId"
+              path="/order-placed/"
               exact
               component={OrderPlaced}
             />

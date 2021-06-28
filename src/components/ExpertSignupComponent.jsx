@@ -6,6 +6,7 @@ import Services from "./../services/Services.js";
 import emailjs from "emailjs-com";
 import { LOCAL_URL } from "./../services/constant.js";
 import LoadingComponent from "./LoadingComponent.jsx";
+import firebase from "./../services/firebase";
 class ExpertSignupComponent extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +20,7 @@ class ExpertSignupComponent extends Component {
       image: "",
       description: "",
       fees: "",
+      isVerified: false,
       occupations: [
         { value: "Doctor", label: "Doctor" },
         { value: "Engineer", label: "Engineer" },
@@ -41,7 +43,71 @@ class ExpertSignupComponent extends Component {
       selctedSpecialization: "",
     };
     this.handleExpertSubmit = this.handleExpertSubmit.bind(this);
+    this.handleSendOtp = this.handleSendOtp.bind(this);
   }
+  configureCaptcha = () => {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+      "sign-in-button",
+      {
+        size: "invisible",
+        callback: (response) => {
+          // reCAPTCHA solved, allow signInWithPhoneNumber.
+          this.onSignInSubmit();
+          console.log("Recaptca varified");
+        },
+        defaultCountry: "IN",
+      }
+    );
+  };
+
+  onSubmitOTP = (e) => {
+    e.preventDefault();
+    const code = this.state.otp;
+    console.log(code);
+    window.confirmationResult
+      .confirm(code)
+      .then((result) => {
+        // User signed in successfully.
+        const user = result.user;
+        console.log(JSON.stringify(user));
+        alert("User is verified");
+        this.setState({ isVerified: true });
+        // ...
+      })
+      .catch((error) => {
+        // User couldn't sign in (bad verification code?)
+        // ...
+      });
+  };
+  handleSendOtp(e) {
+    e.preventDefault();
+    if (this.state.phone.length !== 10) {
+      alert("Invalid Phone Number");
+      return;
+    }
+    this.configureCaptcha();
+    const phoneNumber = "+91" + this.state.phone;
+    console.log(phoneNumber);
+    const appVerifier = window.recaptchaVerifier;
+    firebase
+      .auth()
+      .signInWithPhoneNumber(phoneNumber, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+        console.log("OTP has been sent");
+        alert("OTP Sent");
+        this.setState({ showOtpPanel: true });
+        // ...
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        // ...
+        alert("SMS not sent!!Please try after some time");
+      });
+  }
+
   handleExpertSubmit(e) {
     e.preventDefault();
     let errorMessage = "";
@@ -184,23 +250,70 @@ class ExpertSignupComponent extends Component {
               </Col>
             </FormGroup>
             <FormGroup row>
+              <div id="sign-in-button"></div>
               <Label for="phone" sm={3}>
                 Mobile Number
               </Label>
-              <Col sm={9}>
+              <Col sm={6}>
                 <Input
                   type="text"
                   name="phone"
                   id="phone"
-                  placeholder="Enter Phone Number Here"
+                  placeholder="Enter Phone Number"
+                  pattern="[0-9]{10}"
                   onChange={(e) => {
                     this.setState({ phone: e.target.value });
+                    this.setState({ isVerified: false });
                   }}
                 />
               </Col>
+              <Col sm={3}>
+                <Button
+                  onClick={this.handleSendOtp}
+                  style={{
+                    padding: 0,
+                    margin: "0",
+                    width: "80px",
+                    height: "40px",
+                  }}
+                >
+                  send otp
+                </Button>
+              </Col>
             </FormGroup>
+            {this.state.showOtpPanel && (
+              <FormGroup row>
+                <Label for="otp" sm={3}>
+                  Enter OTP
+                </Label>
+                <Col sm={6}>
+                  <Input
+                    type="text"
+                    name="otp"
+                    id="otp"
+                    placeholder="Enter OTP here"
+                    onChange={(e) => {
+                      this.setState({ otp: e.target.value });
+                    }}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Button
+                    onClick={this.onSubmitOTP}
+                    style={{
+                      padding: 0,
+                      margin: "0",
+                      width: "80px",
+                      height: "40px",
+                    }}
+                  >
+                    Verify
+                  </Button>
+                </Col>
+              </FormGroup>
+            )}
             <FormGroup row>
-              <Label for="phone" sm={3}>
+              <Label for="aadhar" sm={3}>
                 Aadhar Number
               </Label>
               <Col sm={9}>

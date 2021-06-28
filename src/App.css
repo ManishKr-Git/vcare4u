@@ -116,7 +116,7 @@
   background-color: #c6ecfa;
   padding: 15px;
 }
-.booking {
+.bookingSummary {
   width: 400px;
   background-color: #e8ebe5;
   margin: 0 auto;
@@ -148,4 +148,29 @@
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   padding: 30px;
+}
+.booking {
+  background-color: #e8ebe5;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  padding: 10px;
+}
+.eachBooking {
+  width: 500px;
+  background-color: #e8ebe5;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  padding: 20px;
+}
+.searchResult {
+  position: absolute;
+  margin-right: 545px;
+  top: 50%;
+  width: 350px;
+  background-color: white;
+  z-index: 999999;
+  padding: 10px;
 }

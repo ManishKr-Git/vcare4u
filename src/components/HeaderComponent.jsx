@@ -10,102 +10,182 @@ class HeaderComponent extends Component {
     this.state = {
       isUserLoggenIn: false,
       isExpertLoggedIn: false,
+      displaySearchResult: false,
+      searchText: "",
+      searchResult: [],
+      allExperts: [],
     };
 
     this.hadleLogout = this.hadleLogout.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSearchResultClick = this.handleSearchResultClick.bind(this);
   }
   hadleLogout = () => {
     Services.logout();
     window.location.href = "/login";
   };
+  handleChange(e) {
+    if (e.target.value.length > 0) {
+      this.setState({ searchText: e.target.value });
+      const result = [];
+      this.setState({ displaySearchResult: true });
+      this.state.allExperts.filter((item) => {
+        if (
+          item.name.toLowerCase().includes(this.state.searchText.toLowerCase())
+        ) {
+          console.log(item.name);
+          result.push(item);
+        }
+      });
+      this.setState({ searchResult: result });
+    } else {
+      this.setState({ displaySearchResult: false });
+    }
+  }
+  componentDidMount() {
+    Services.getAllExperts().then(
+      (response) => {
+        this.setState({ allExperts: response.data });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  handleSearchResultClick(e) {
+    console.log(e);
+  }
   render() {
     return (
-      <Navbar expand="md" bg="dark" variant="dark" className="p-1">
-        <Navbar.Brand>
-          <Link to={Services.isExpertLoggedIn ? "#" : "/home"}>
-            <img
-              src={logo}
-              alt="logo"
-              height="40px"
-              style={{ margin: "0", padding: "0" }}
-            />
-          </Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-na" className="justify-content-end">
-          <Nav className=" justify-content-end">
-            <Form inline style={{ marginRight: "150px" }}>
-              <Form.Control
-                style={{ height: "30px", width: "360px", borderRadius: "15px" }}
-                type="text"
-                placeholder="Search Here"
-                className="mr-sm-2"
+      <>
+        <Navbar expand="md" bg="dark" variant="dark" className="p-1">
+          <Navbar.Brand>
+            <Link to={Services.isExpertLoggedIn ? "#" : "/home"}>
+              <img
+                src={logo}
+                alt="logo"
+                height="40px"
+                style={{ margin: "0", padding: "0" }}
               />
-              <Button
-                color="success"
-                style={{
-                  height: "30px",
-                  padding: "0 10px 0 10px",
-                  borderRadius: "15px",
-                }}
-              >
-                Search
-              </Button>
-            </Form>
-            <ul className="navbar-nav justify-content-end">
+            </Link>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-na" className="justify-content-end">
+            <Nav className=" justify-content-end">
               {!Services.isExpertLoggedIn() && (
-                <Link className="nav-link" to="/home">
-                  Home
-                </Link>
-              )}
-              <Link className="nav-link" to="/about">
-                About
-              </Link>
-              <Link className="nav-link" to="/contactus">
-                Contact Us
-              </Link>
-              {!(Services.isExpertLoggedIn() || Services.isUserLoggedIn()) && (
-                <Link className="nav-link" to="/login">
-                  Login/Signup
-                </Link>
-              )}
-              {(Services.isExpertLoggedIn() || Services.isUserLoggedIn()) && (
-                <NavDropdown
-                  alignRight
-                  title="My Account"
-                  id="basic-nav-dropdown"
+                <Form
+                  inline
+                  style={{ marginRight: "150px", marginLeft: "0px" }}
                 >
-                  <NavDropdown.Item>
+                  <Form.Control
+                    style={{
+                      height: "30px",
+                      width: "360px",
+                      borderRadius: "15px",
+                    }}
+                    type="text"
+                    id="searchBar"
+                    placeholder="Search an Expert by Name..."
+                    className="mr-sm-2"
+                    onChange={this.handleChange}
+                  />
+                  <Button
+                    color="success"
+                    style={{
+                      height: "30px",
+                      padding: "0 10px 0 10px",
+                      borderRadius: "15px",
+                    }}
+                  >
+                    Search
+                  </Button>
+                </Form>
+              )}
+              <ul className="navbar-nav justify-content-end">
+                {!Services.isExpertLoggedIn() && (
+                  <Link className="nav-link" to="/home">
+                    Home
+                  </Link>
+                )}
+                <Link className="nav-link" to="/about">
+                  About
+                </Link>
+                <Link className="nav-link" to="/contactus">
+                  Contact Us
+                </Link>
+                {!(
+                  Services.isExpertLoggedIn() || Services.isUserLoggedIn()
+                ) && (
+                  <Link className="nav-link" to="/login">
+                    Login/Signup
+                  </Link>
+                )}
+                {(Services.isExpertLoggedIn() || Services.isUserLoggedIn()) && (
+                  <NavDropdown
+                    alignRight
+                    title="My Account"
+                    id="basic-nav-dropdown"
+                  >
+                    {/* <NavDropdown.Item>
                     <Link
                       to="/profile"
                       style={{ textDecoration: "none", color: "black" }}
                     >
                       View Profile
                     </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Link
-                      to="/bookings"
-                      style={{ textDecoration: "none", color: "black" }}
-                    >
-                      Bookings
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={this.hadleLogout}>
-                    <Link
-                      to="/#"
-                      style={{ textDecoration: "none", color: "black" }}
-                    >
-                      Logout
-                    </Link>
-                  </NavDropdown.Item>
-                </NavDropdown>
-              )}
-            </ul>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+                  </NavDropdown.Item> */}
+                    <NavDropdown.Item>
+                      <Link
+                        to="/bookings"
+                        style={{ textDecoration: "none", color: "black" }}
+                      >
+                        Bookings
+                      </Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={this.hadleLogout}>
+                      <Link
+                        to="/#"
+                        style={{ textDecoration: "none", color: "black" }}
+                      >
+                        Logout
+                      </Link>
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                )}
+              </ul>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        <Navbar className="searchResultNavbar">
+          <Navbar.Collapse className="justify-content-end">
+            {this.state.displaySearchResult && (
+              <div className="searchResult">
+                {this.state.searchResult.length > 0 ? (
+                  this.state.searchResult.map((expert) => (
+                    <div>
+                      <a
+                        className="nav-link"
+                        href={
+                          "/expert-page/ksuz2mc1d5xaf8h7lcdp4pzd5hyj05fkpl6r6031elpgn6tgpvsgs8w3b34cb26n/" +
+                          expert.id
+                        }
+                      >
+                        {expert.name}
+                      </a>
+                      <hr />
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    <h5>No Result Found!!!</h5>
+                  </div>
+                )}
+              </div>
+            )}
+          </Navbar.Collapse>
+        </Navbar>
+      </>
     );
   }
 }

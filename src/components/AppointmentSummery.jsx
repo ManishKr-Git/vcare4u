@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Col, Row, Button } from "reactstrap";
 import Services from "../services/Services";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
+import { LaptopWindows } from "@material-ui/icons";
 class AppointmentSummery extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +12,49 @@ class AppointmentSummery extends Component {
     this.handleBooking = this.handleBooking.bind(this);
   }
   handleBooking() {
-    this.props.history.push(
-      "/order-placed/expert-id/" + this.state.selectedExpert.id
+    const expertId = this.props.match.params.expertId;
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+    const bookingData = {
+      userId: userData.data.id,
+      expertId: expertId,
+      userName: userData.data.name,
+      expertName: this.state.selectedExpert.name,
+      userRating: 0,
+      fees: this.state.selectedExpert.fees,
+      expertRating: this.state.selectedExpert.rating,
+    };
+    Services.createOrder(bookingData).then(
+      (response) => {
+        if (response.data.status === "created") {
+          const options = {
+            key: "rzp_test_eLPfUeW6aBcJdA",
+            amount: bookingData.fees * 100, //  = INR 1
+            name: "VCARE4U",
+            description: "Booking Payment",
+            image: "https://cdn.razorpay.com/logos/7K3b6d18wHwKzL_medium.png",
+            handler: function (response) {
+              window.location.href = "/order-placed/";
+            },
+            prefill: {
+              name: "",
+              contact: "",
+              email: "",
+            },
+            notes: {
+              address: "",
+            },
+            theme: {
+              color: "success",
+              hide_topbar: true,
+            },
+          };
+          var rzp1 = new window.Razorpay(options);
+          rzp1.open();
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
     );
   }
   componentDidMount() {
@@ -35,7 +76,7 @@ class AppointmentSummery extends Component {
   render() {
     return (
       <>
-        <div className="booking">
+        <div className="bookingSummary">
           <center>
             <h3>Booking Summary</h3>
           </center>
@@ -108,7 +149,11 @@ class AppointmentSummery extends Component {
                 </Col>
               </Row>
               <Row className="p-4">
-                <Button color="primary" onClick={this.handleBooking}>
+                <Button
+                  color="primary"
+                  id="payment"
+                  onClick={this.handleBooking}
+                >
                   Proceed to Pay
                 </Button>
               </Row>

@@ -17,6 +17,7 @@ export default class ExpertDetailsComponent extends Component {
     this.handleAddRating = this.handleAddRating.bind(this);
   }
   componentDidMount() {
+    document.getElementById("searchBar").value = "";
     const id = this.props.match.params.expertId;
     Services.getExpert(id).then(
       (response) => {
@@ -42,11 +43,12 @@ export default class ExpertDetailsComponent extends Component {
   handleAddRating() {
     const userData = JSON.parse(sessionStorage.getItem("user"));
     const ratingData = {
-      id: userData.id,
-      raterName: userData.name,
+      customerId: userData.data.id,
+      raterName: userData.data.name,
       stars: this.state.rating,
       review: this.state.review,
     };
+    console.log(ratingData);
     const expertId = this.props.match.params.expertId;
     Services.updateExpertRating(expertId, ratingData).then(
       (response) => {
@@ -196,32 +198,40 @@ export default class ExpertDetailsComponent extends Component {
               </Button>
             </div>
             <hr style={{ borderTop: "1px solid #ffc107" }}></hr>
-            <div
-              className="container ml-0 p-1"
-              style={{
-                width: "870px",
-                backgroundColor: "#868785",
-                boxShadow:
-                  "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
-              }}
-            >
+            <div className="container ml-0 p-1">
               {this.state.all_reviews &&
                 this.state.all_reviews.map((review) => (
                   <>
-                    <div style={{ display: "flex" }}>
-                      <h6 style={{ color: "#E6F369", marginTop: "5px" }}>
-                        <span>{review.raterName}</span>
+                    <div
+                      style={{
+                        backgroundColor: "#868785",
+                        padding: "10px",
+                        margin: "10px",
+                        boxShadow:
+                          "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        <h6 style={{ color: "#E6F369", margin: "5px" }}>
+                          <span>{review.raterName}</span>
+                        </h6>
+                        <ReactStars
+                          count={5}
+                          size={20}
+                          value={review.stars}
+                          isHalf={true}
+                          activeColor="#ffd700"
+                          edit={false}
+                        />
+                      </div>
+                      <h6 style={{ color: "#E6ECEA", margin: "5px" }}>
+                        {review.review}
                       </h6>
-                      <ReactStars
-                        count={5}
-                        size={20}
-                        value={review.stars}
-                        isHalf={true}
-                        activeColor="#ffd700"
-                        edit={false}
-                      />
                     </div>
-                    <h6 style={{ color: "#E6ECEA" }}>{review.review}</h6>
                   </>
                 ))}
             </div>
