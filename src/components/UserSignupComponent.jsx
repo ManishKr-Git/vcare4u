@@ -48,16 +48,14 @@ class UserSignupComponent extends Component {
     window.confirmationResult
       .confirm(code)
       .then((result) => {
-        // User signed in successfully.
         const user = result.user;
         console.log(JSON.stringify(user));
         alert("User is verified");
         this.setState({ isVerified: true });
-        // ...
       })
       .catch((error) => {
-        // User couldn't sign in (bad verification code?)
-        // ...
+        console.log(error);
+        this.setState({ isVerified: false });
       });
   };
   handleSendOtp(e) {
@@ -226,6 +224,7 @@ class UserSignupComponent extends Component {
                 </Col>
                 <Col sm={3}>
                   <Button
+                    color="success"
                     onClick={this.handleSendOtp}
                     style={{
                       padding: 0,
@@ -256,6 +255,7 @@ class UserSignupComponent extends Component {
                   </Col>
                   <Col sm={3}>
                     <Button
+                      color="success"
                       onClick={this.onSubmitOTP}
                       style={{
                         padding: 0,

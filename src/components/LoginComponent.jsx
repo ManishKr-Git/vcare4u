@@ -3,6 +3,7 @@ import { Form, FormGroup, Input, Button, Label } from "reactstrap";
 import { Link } from "react-router-dom";
 import Services from "./../services/Services.js";
 import LoadingComponent from "./LoadingComponent";
+import { Helmet } from "react-helmet";
 class LoginComponent extends Component {
   constructor(props) {
     super(props);
@@ -91,7 +92,7 @@ class LoginComponent extends Component {
         Services.userLogin(data).then(
           (response) => {
             sessionStorage.setItem("user", JSON.stringify(response.data));
-            window.location.href = `/home/${response.data.name}`;
+            window.location.href = `/expert-page`;
           },
           (error) => {
             this.setState({ errorMessage: error.response.data.message });
@@ -106,8 +107,13 @@ class LoginComponent extends Component {
   render() {
     return (
       <>
+        <Helmet>
+          <title>Vcare4u | Login</title>
+        </Helmet>
         <div className="container mt-5">
-          {this.state.showLoading && <LoadingComponent></LoadingComponent>}
+          {this.state.showLoading && (
+            <LoadingComponent type="Circles"></LoadingComponent>
+          )}
           {!this.state.showLoading && (
             <div id="loginForm">
               <Form onSubmit={this.handleLogin}>

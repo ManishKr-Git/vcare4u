@@ -8,6 +8,7 @@ import LoginComponent from "./LoginComponent.jsx";
 import UserSignupComponent from "./UserSignupComponent.jsx";
 import ExpertSignupComponent from "./ExpertSignupComponent.jsx";
 import HomeComponent from "./HomeComponent.jsx";
+import AllExpertComponent from "./AllExpertComponent.jsx";
 import ExpertDetailsComponent from "./ExpertDetailsComponent";
 import LogoutComponent from "./LogoutComponent";
 import AboutComponent from "./AboutComponent";
@@ -17,6 +18,7 @@ import BookingsComponent from "./BookingsComponent";
 import UserAuthenticatedRoute from "../services/UserAuthenticatedRoute";
 import AppointmentSummery from "./AppointmentSummery.jsx";
 import OrderPlaced from "./OrderPlaced.jsx";
+import { SelectedCategoryExpert } from "./SelectedCategoryExpert.jsx";
 class RouteComponent extends Component {
   render() {
     return (
@@ -31,6 +33,12 @@ class RouteComponent extends Component {
               path="/home/:username"
               exact
               component={HomeComponent}
+            />
+            <Route path="/expert-page" exact component={AllExpertComponent} />
+            <Route
+              path="/selectedCategory/:category"
+              exact
+              component={SelectedCategoryExpert}
             />
             <Route path="/home" exact component={HomeComponent} />
             <Route path="/signup" exact component={SignupComponent} />

@@ -3,12 +3,9 @@ import { Button } from "reactstrap";
 import { Helmet } from "react-helmet";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import headerImage from "./../images/experts.png";
-import doctors from "./../images/doctor.svg";
-import engineers from "./../images/engineer.svg";
-import csengineers from "./../images/csengineer.svg";
-import lawyers from "./../images/lawyer.svg";
-import svg2 from "./../images/svg4.png";
+import headerImage from "./../static/images/experts.png";
+import svg1 from "./../static/images/svg2.svg";
+import svg2 from "./../static/images/svg4.png";
 import { Link } from "react-router-dom";
 import "./../styles/myStyle.css";
 import OwlCarousel from "react-owl-carousel";
@@ -23,7 +20,7 @@ class HomeComponent extends Component {
     return (
       <>
         <Helmet>
-          <title>Vcare4u | Main</title>
+          <title>Vcare4u | Home</title>
         </Helmet>
         <div className="homediv" data-aos="slide-right" data-aos-once="true">
           <div
@@ -72,7 +69,7 @@ class HomeComponent extends Component {
                       data-aos-once="true"
                     >
                       <Link
-                        to="/signup"
+                        to="/experts"
                         style={{
                           color: "black",
                           fontFamily: "'Roboto', sans-serif",
@@ -142,7 +139,7 @@ class HomeComponent extends Component {
                       data-aos-once="true"
                     >
                       <Link
-                        to="/signup"
+                        to="/experts"
                         style={{
                           color: "black",
                           fontFamily: "'Roboto', sans-serif",
@@ -176,7 +173,7 @@ class HomeComponent extends Component {
         </div>
 
         <div className="serviceDiv">
-          <h1 className="services">We Provides</h1>
+          <h1>Vcare4u Provides</h1>
           <OwlCarousel
             className="owl-theme"
             loop
@@ -187,43 +184,25 @@ class HomeComponent extends Component {
           >
             <div class="item">
               <center>
-                <h4>Doctors</h4>
+                <h4>Person One</h4>
                 <div>
-                  <img src={doctors} height="200px" width="200px" alt="img1" />
+                  <img src={svg1} height="200px" width="200px" />
                 </div>
               </center>
             </div>
             <div class="item">
               <center>
-                <h4>Civil Engineers</h4>
+                <h4>Person Two</h4>
                 <div>
-                  <img
-                    src={engineers}
-                    height="200px"
-                    width="200px"
-                    alt="img1"
-                  />
+                  <img src={svg1} height="200px" width="200px" />
                 </div>
               </center>
             </div>
             <div class="item">
               <center>
-                <h4>Lawyers</h4>
+                <h4>Person Three</h4>
                 <div>
-                  <img src={lawyers} height="200px" width="200px" alt="img1" />
-                </div>
-              </center>
-            </div>
-            <div class="item">
-              <center>
-                <h4>Software Engineer</h4>
-                <div>
-                  <img
-                    src={csengineers}
-                    height="200px"
-                    width="200px"
-                    alt="img1"
-                  />
+                  <img src={svg1} height="200px" width="200px" />
                 </div>
               </center>
             </div>

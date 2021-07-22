@@ -167,10 +167,18 @@
 }
 .searchResult {
   position: absolute;
-  margin-right: 545px;
+  margin-right: 560px;
   top: 50%;
   width: 350px;
   background-color: white;
   z-index: 999999;
   padding: 10px;
+}
+.owl-theme {
+  background: linear-gradient(-110deg, lightblue 50%, deeppink 50%);
+  padding: 10px;
+}
+.services {
+  font-family: "lato,ubuntu,helvetica,sans-serif";
+  color: white;
 }

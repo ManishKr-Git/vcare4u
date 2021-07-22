@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UserSignupComponent from "./UserSignupComponent.jsx";
 import ExpertSignupComponent from "./ExpertSignupComponent.jsx";
+import { Helmet } from "react-helmet";
 class SignupComponent extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +13,6 @@ class SignupComponent extends Component {
     this.handleExpertSignup = this.handleExpertSignup.bind(this);
   }
   handleUserSignup() {
-    console.log(this.props);
     this.setState({ userActive: true });
     this.setState({ expertActive: false });
   }
@@ -23,6 +23,9 @@ class SignupComponent extends Component {
   render() {
     return (
       <>
+        <Helmet>
+          <title>Vcare4u | SignUp</title>
+        </Helmet>
         <div className="container mt-3">
           <div id="signup_header" className="mb-2">
             <span

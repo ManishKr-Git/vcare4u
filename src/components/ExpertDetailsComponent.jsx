@@ -4,6 +4,7 @@ import Services from "./../services/Services.js";
 import ReactStars from "react-rating-stars-component";
 import LoadingComponent from "./LoadingComponent.jsx";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 export default class ExpertDetailsComponent extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +54,7 @@ export default class ExpertDetailsComponent extends Component {
     Services.updateExpertRating(expertId, ratingData).then(
       (response) => {
         console.log(response);
+        window.location.reload();
       },
       (error) => {
         console.log(error);
@@ -62,7 +64,12 @@ export default class ExpertDetailsComponent extends Component {
   render() {
     return (
       <>
-        {this.state.showLoading && <LoadingComponent></LoadingComponent>}
+        <Helmet>
+          <title>Vcare4u | ExpertsDetails</title>
+        </Helmet>
+        {this.state.showLoading && (
+          <LoadingComponent type="Grid"></LoadingComponent>
+        )}
         {this.state.selectedExpert && (
           <div className="container mt-5">
             <Row>
@@ -142,7 +149,9 @@ export default class ExpertDetailsComponent extends Component {
                 <br></br>
                 You Save:
                 <span className="text-danger">
-                  ₹{this.state.selectedExpert.fees}
+                  ₹
+                  {this.state.selectedExpert.priceWithoutDiscount -
+                    this.state.selectedExpert.fees}
                 </span>
                 <br></br>
                 <br></br>

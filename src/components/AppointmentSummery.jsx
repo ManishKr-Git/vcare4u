@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { Col, Row, Button } from "reactstrap";
 import Services from "../services/Services";
 import ReactStars from "react-rating-stars-component";
+import LoadingComponent from "./LoadingComponent";
+import { Helmet } from "react-helmet";
 class AppointmentSummery extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedExpert: null,
+      showLoading: true,
     };
     this.handleBooking = this.handleBooking.bind(this);
   }
@@ -75,11 +78,17 @@ class AppointmentSummery extends Component {
   render() {
     return (
       <>
+        <Helmet>
+          <title>Vcare4u | Summary</title>
+        </Helmet>
         <div className="bookingSummary">
           <center>
             <h3>Booking Summary</h3>
           </center>
           <hr />
+          {this.state.showLoading && (
+            <LoadingComponent type="Oval"></LoadingComponent>
+          )}
           {this.state.selectedExpert && (
             <>
               <Row>

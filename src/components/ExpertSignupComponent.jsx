@@ -21,29 +21,68 @@ class ExpertSignupComponent extends Component {
       description: "",
       fees: "",
       isVerified: false,
+      selctedExpertization: "",
+      selctedSpecialization: "",
       occupations: [
         { value: "Doctor", label: "Doctor" },
         { value: "Engineer", label: "Engineer" },
+        { value: "Lawyer", label: "Lawyers" },
+        { value: "HR", label: "HR consulting" },
       ],
-      specialization: [],
-      Doctor: [
-        { value: "Anesthesiologists", label: "Anesthesiologists" },
-        { value: "Cardiologists", label: "Cardiologists" },
-        {
-          value: "Colon and Rectal Surgeons",
-          label: "Colon and Rectal Surgeons",
-        },
-      ],
-      Engineer: [
-        { value: "Electronic Engineer", label: "Electronic Engineer" },
-        { value: "Mechanical Engineer", label: "Mechanical Engineer" },
-        { value: "Computer Engineer", label: "Computer Engineer" },
-      ],
-      selctedExpertization: "",
-      selctedSpecialization: "",
+      specialization: {
+        Doctor: [
+          { value: "Anesthesiologists", label: "Anesthesiologists" },
+          { value: "Cardiologists", label: "Cardiologists" },
+          {
+            value: "Colon and Rectal Surgeons",
+            label: "Colon and Rectal Surgeons",
+          },
+          {
+            value: "Audiologist",
+            label: "Audiologist",
+          },
+          {
+            value: "Dentist",
+            label: "Dentist",
+          },
+          {
+            value: "Gynaecologist",
+            label: "Gynaecologist",
+          },
+        ],
+        Engineer: [
+          { value: "Electronic Engineer", label: "Electronic Engineer" },
+          { value: "Mechanical Engineer", label: "Mechanical Engineer" },
+          { value: "Computer Engineer", label: "Computer Engineer" },
+          { value: "Chemical engineering", label: "Chemical engineering" },
+          { value: "Civil engineering", label: "Civil engineering" },
+        ],
+        Lawyer: [
+          {
+            value: "Intellectual Property Lawyer",
+            label: "Intellectual Property Lawyer",
+          },
+          { value: "Public Interest Lawyer", label: "Public Interest Lawyer" },
+          { value: "Tax Lawyer", label: "Tax Lawyer" },
+          { value: "Corporate Lawyer", label: "Corporate Lawyers" },
+          { value: "Criminal Lawyer", label: "Criminal Lawyer" },
+        ],
+        HR: [
+          {
+            value: "Human resources assistant",
+            label: "Human resources assistant",
+          },
+          {
+            value: "Human resources specialist",
+            label: "Human resources specialist",
+          },
+        ],
+      },
     };
     this.handleExpertSubmit = this.handleExpertSubmit.bind(this);
     this.handleSendOtp = this.handleSendOtp.bind(this);
+    this.validateAlphanumericPasswordCheck =
+      this.validateAlphanumericPasswordCheck.bind(this);
   }
   configureCaptcha = () => {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
@@ -107,7 +146,10 @@ class ExpertSignupComponent extends Component {
         alert("SMS not sent!!Please try after some time");
       });
   }
-
+  validateAlphanumericPasswordCheck(password) {
+    let regex = /^[a-zA-Z0-9!@#$%^&()_+\-=[]{};':"\\|,.<>\/?]{8,}$/;
+    return regex.test(password);
+  }
   handleExpertSubmit(e) {
     e.preventDefault();
     let errorMessage = "";
@@ -123,12 +165,21 @@ class ExpertSignupComponent extends Component {
     if (this.state.aadhar.length < 12) {
       errorMessage += "Invalid Aadhar Number\n";
     }
+    if (this.state.password.length < 8) {
+      errorMessage +=
+        "Password length should be minimum 8 and should contain combination of alphabets,numbers and special characters!\n";
+    }
+    if (!this.validateAlphanumericPasswordCheck(this.state.passwordssword)) {
+      errorMessage +=
+        "Password length should be minimum 8 and should contain\n";
+    }
     if (this.state.password === "" && this.state.cpassword === "") {
       errorMessage += "Invalid Password\n";
     }
     if (this.state.password !== this.state.cpassword) {
       errorMessage += "Password should match\n";
     }
+
     if (this.state.selctedExpertization === "") {
       errorMessage += "Choose a Expertization Field\n";
     }
@@ -214,7 +265,9 @@ class ExpertSignupComponent extends Component {
             {this.state.errorMessage}
           </div>
         )}
-        {this.state.showLoading && <LoadingComponent />}
+        {this.state.showLoading && (
+          <LoadingComponent type="Circles"></LoadingComponent>
+        )}
         {!this.state.showLoading && (
           <Form onSubmit={this.handleExpertSubmit}>
             <FormGroup row>
@@ -270,6 +323,7 @@ class ExpertSignupComponent extends Component {
               <Col sm={3}>
                 <Button
                   onClick={this.handleSendOtp}
+                  color="success"
                   style={{
                     padding: 0,
                     margin: "0",
@@ -300,6 +354,7 @@ class ExpertSignupComponent extends Component {
                 <Col sm={3}>
                   <Button
                     onClick={this.onSubmitOTP}
+                    color="success"
                     style={{
                       padding: 0,
                       margin: "0",
@@ -368,11 +423,7 @@ class ExpertSignupComponent extends Component {
                 <Select
                   options={this.state.occupations}
                   onChange={(e) => {
-                    if (e.value === "Doctor") {
-                      this.setState({ specialization: this.state.Doctor });
-                    } else {
-                      this.setState({ specialization: this.state.Engineer });
-                    }
+                    console.log(e.value);
                     this.setState({ selctedExpertization: e.value });
                   }}
                 />
@@ -385,7 +436,9 @@ class ExpertSignupComponent extends Component {
               <Col sm={9}>
                 <Select
                   name="specialization"
-                  options={this.state.specialization}
+                  options={
+                    this.state.specialization[this.state.selctedExpertization]
+                  }
                   onChange={(e) => {
                     this.setState({
                       selctedSpecialization: e.value,

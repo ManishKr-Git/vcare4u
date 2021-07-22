@@ -1,6 +1,5 @@
 import axios from "axios";
-import { BASE_URL, SECRET_KEY } from "./constant";
-var CryptoJS = require("crypto-js");
+import { BASE_URL } from "./constant";
 class Services {
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //Users Functions
@@ -63,6 +62,9 @@ class Services {
   getExpertBookings(id) {
     return axios.get(`${BASE_URL}/expert-bookings/${id}`);
   }
+  getSelectedCategoryExperts(category) {
+    return axios.get(`${BASE_URL}/selectedCategoryExperts/${category}`);
+  }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //Common Functions
@@ -89,10 +91,6 @@ class Services {
   //   ).toString();
   //   return ciphertext;
   // }
-  passwordDecryption(password) {
-    var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
-    return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  }
   getExpertReviews(id) {
     return axios.get(`${BASE_URL}/expert-ratings/${id}`);
   }

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 import logo from ".././images/logo.png";
 import Services from "../services/Services.js";
+import { LOCAL_URL } from "../services/constant";
 class HeaderComponent extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,13 @@ class HeaderComponent extends Component {
       searchText: "",
       searchResult: [],
       allExperts: [],
+      occupations: [
+        { value: "Doctor", label: "Doctors Consulting" },
+        { value: "Engineer", label: "Engineers Consulting" },
+        { value: "Lawyer", label: "Lawyers Consulting" },
+        { value: "HR", label: "HRs Consulting" },
+        { value: "Others", label: "Others" },
+      ],
     };
 
     this.hadleLogout = this.hadleLogout.bind(this);
@@ -60,7 +68,7 @@ class HeaderComponent extends Component {
       <>
         <Navbar expand="md" bg="dark" variant="dark" className="p-1">
           <Navbar.Brand>
-            <Link to={Services.isExpertLoggedIn ? "#" : "/home"}>
+            <Link to="/home">
               <img
                 src={logo}
                 alt="logo"
@@ -73,10 +81,7 @@ class HeaderComponent extends Component {
           <Navbar.Collapse id="basic-navbar-na" className="justify-content-end">
             <Nav className=" justify-content-end">
               {!Services.isExpertLoggedIn() && (
-                <Form
-                  inline
-                  style={{ marginRight: "150px", marginLeft: "0px" }}
-                >
+                <Form inline style={{ marginRight: "50px", marginLeft: "0px" }}>
                   <Form.Control
                     style={{
                       height: "30px",
@@ -103,9 +108,34 @@ class HeaderComponent extends Component {
               )}
               <ul className="navbar-nav justify-content-end">
                 {!Services.isExpertLoggedIn() && (
-                  <Link className="nav-link" to="/home">
-                    Home
+                  <Link className="nav-link" to="/expert-page">
+                    All Experts
                   </Link>
+                )}
+                {!Services.isExpertLoggedIn() && (
+                  <NavDropdown title="Our Services" id="basic-nav-dropdown">
+                    {this.state.occupations.map((menu) => (
+                      <>
+                        <NavDropdown.Item key={menu.label}>
+                          <Link
+                            // to={`/selectedCategory/${menu.value}`}
+                            style={{
+                              textDecoration: "none",
+                              color: "#072937",
+                            }}
+                            onClick={() => {
+                              window.location.assign(
+                                LOCAL_URL + "/selectedCategory/" + menu.value
+                              );
+                            }}
+                          >
+                            {menu.label}
+                          </Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Divider />
+                      </>
+                    ))}
+                  </NavDropdown>
                 )}
                 <Link className="nav-link" to="/about">
                   About
@@ -164,15 +194,15 @@ class HeaderComponent extends Component {
                 {this.state.searchResult.length > 0 ? (
                   this.state.searchResult.map((expert) => (
                     <div>
-                      <a
+                      <Link
                         className="nav-link"
-                        href={
+                        to={
                           "/expert-page/ksuz2mc1d5xaf8h7lcdp4pzd5hyj05fkpl6r6031elpgn6tgpvsgs8w3b34cb26n/" +
                           expert.id
                         }
                       >
                         {expert.name}
-                      </a>
+                      </Link>
                       <hr />
                     </div>
                   ))

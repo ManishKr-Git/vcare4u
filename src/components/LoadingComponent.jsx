@@ -1,10 +1,21 @@
 import React, { Component } from "react";
-import loading from "./../images/Fidget-spinner.gif";
+import Loader from "react-loader-spinner";
 class LoadingComponent extends Component {
+  constructor(props) {
+    super(props);
+    console.log(this.props);
+  }
   render() {
     return (
-      <div className="loading">
-        <img src={loading} alt="" />
+      <div>
+        <center>
+          <Loader
+            type={this.props.type}
+            color="#00BFFF"
+            height={200}
+            width={200}
+          />
+        </center>
       </div>
     );
   }
